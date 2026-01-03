@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes</title>
+    <link rel="stylesheet" href="app.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Notey</h1>
+      <p>think it, tap it, keep it.</p>
+    </header>
+
+    <div class="container">
+      <!-- sidebar -->
+      <div id="sidebar">
+        <button id="new-note-btn">
+          <i class="fa-regular fa-pen-to-square"></i>
+          New Note
+        </button>
+        <hr />
+        <div id="notes-list"></div>
+      </div>
+      <!-- editor -->
+      <div id="editor">
+        <div class="editor-placeholder">
+          <i class="fa-solid fa-note-sticky"></i>
+          <p>Select a note or create a new one</p>
+        </div>
+
+        <div id="note-editor" class="note-editor hidden">
+          <div class="note-header">
+            <small id="note-date"></small>
+            <button id="delete-note-btn" class="delete-btn">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+
+          <textarea
+            id="note-content"
+            placeholder="New Note"
+            autofocus
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

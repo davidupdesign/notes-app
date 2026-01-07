@@ -2,8 +2,6 @@
   font-family: "Onest", sans-serif;
 }
 
-
-
 body {
   margin: 0;
   height: 100vh;
@@ -139,6 +137,31 @@ header p {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.note-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  margin: 12px;
+  background-color: #CCDBFD;
+  box-shadow: -1px 2px 5px #96ade490;
+  border-radius: 10px;
+  transition: 0.15s ease-out;
+}
+
+.note-item:hover {
+  cursor: pointer;
+  background-color: #E2EAFC;
+}
+
+.note-item.active {
+  background-color: #ABC4FF;
+}
+
+.note-item.active:hover {
+  background-color: #b8ccf9;
 }
 
 .hidden {

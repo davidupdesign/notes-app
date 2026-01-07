@@ -13,6 +13,71 @@ let selectedNoteId = null;
 loadNotes();
 renderNotes();
 
+// keyboard shortcuts
+
+// document.addEventListener("keydown", (e) => {
+//   if ((e.ctrlKey || e.metaKey) && e.key === "n") {
+//     e.preventDefault();
+//     const note = createNote();
+//     saveNotes();
+//     selectNote(note.id);
+//     renderNotes();
+//   }
+// });
+
+// document.addEventListener("keydown", (e) => {
+//   if (e.key === "Delete") {
+//     if (selectedNoteId !== null) {
+//       e.preventDefault();
+//       const confirmDelete = confirm("U sure u wanna delete this note?");
+//       if (confirmDelete) {
+//         deleteNote(selectedNoteId);
+//         saveNotes();
+//       }
+//     }
+//   }
+// });
+
+// document.addEventListener("keydown", (e) => {
+//   if (e.key === "Escape") {
+//     selectedNoteId = null;
+//     editorPlaceholder.classList.remove("hidden");
+//     noteEditor.classList.add("hidden");
+//     renderNotes();
+//   }
+// });
+
+document.addEventListener("keydown", (e) => {
+  // create new note
+  if ((e.ctrlKey || e.metaKey) && e.key === "n") {
+    e.preventDefault();
+    const note = createNote();
+    saveNotes();
+    selectNote(note.id);
+    renderNotes();
+  }
+
+  // delete
+  if (e.key === "Delete") {
+    if (selectedNoteId !== null) {
+      e.preventDefault();
+      const confirmDelete = confirm("U sure u wanna delete this note?");
+      if (confirmDelete) {
+        deleteNote(selectedNoteId);
+        saveNotes();
+      }
+    }
+  }
+
+  // Escape - close editor
+  if (e.key === "Escape") {
+    selectedNoteId = null;
+    editorPlaceholder.classList.remove("hidden");
+    noteEditor.classList.add("hidden");
+    renderNotes();
+  }
+});
+
 //Functions
 
 function createNote() {
@@ -28,10 +93,14 @@ function createNote() {
 function renderNotes() {
   notesList.innerHTML = "";
   notes.forEach((note) => {
-    const notePreview = note.content || "New Note";
+    // const notePreview = note.content || "New Note";
+    const splitLine = note.content.split("\n");
+    const notePreview = splitLine[0] || "New Note";
+
+    const isActive = note.id === selectedNoteId;
 
     const noteHTML = `
-    <div class="note-item" data-id="${note.id}">
+    <div class="note-item ${isActive ? "active" : ""}" data-id="${note.id}">
       <div class="note-preview">${notePreview}</div>
       <small>${note.createdAt}</small>
      </div>
@@ -74,9 +143,9 @@ function loadNotes() {
 
 newNoteButton.addEventListener("click", () => {
   const note = createNote();
-  renderNotes();
   saveNotes();
   selectNote(note.id);
+  renderNotes();
 });
 
 notesList.addEventListener("click", (e) => {
@@ -85,6 +154,7 @@ notesList.addEventListener("click", (e) => {
   if (noteItem) {
     const noteId = Number(noteItem.dataset.id);
     selectNote(noteId);
+    renderNotes();
   }
 });
 
@@ -98,6 +168,9 @@ noteContent.addEventListener("input", () => {
 });
 
 deleteNoteButton.addEventListener("click", () => {
-  deleteNote(selectedNoteId);
-  saveNotes();
+  const confirmDelete = confirm("U sure u wanna delete this note?");
+  if (confirmDelete) {
+    deleteNote(selectedNoteId);
+    saveNotes();
+  }
 });

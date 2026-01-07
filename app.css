@@ -2,6 +2,8 @@
   font-family: "Onest", sans-serif;
 }
 
+
+
 body {
   margin: 0;
   height: 100vh;
@@ -22,6 +24,7 @@ body {
 #editor {
   flex: 1;
   background-color: #edf2fb;
+  overflow: hidden;
 }
 
 #new-note-btn {
@@ -58,10 +61,6 @@ header p {
   font-size: 1.2rem;
   font-weight: 600;
   text-shadow: 2px 2px 8px #739dff;
-}
-
-.hidden {
-  display: none;
 }
 
 .editor-placeholder {
@@ -103,7 +102,7 @@ header p {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #D7E3FC;
+  background-color: #d7e3fc;
 }
 
 #note-content {
@@ -113,11 +112,10 @@ header p {
   width: 100%;
   padding: 1rem;
   font-size: 1rem;
-  background-color: #EDF2FB;
+  background-color: #edf2fb;
   resize: none;
   outline: none;
 }
-
 
 #delete-note-btn {
   padding: 0.8rem;
@@ -134,11 +132,15 @@ header p {
 }
 
 #delete-note-btn:hover {
-    color: #E63946;
+  color: #e63946;
 }
 
 #note-editor {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.hidden {
+  display: none !important;
 }

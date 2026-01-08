@@ -7,13 +7,15 @@ const noteDate = document.querySelector("#note-date");
 const newNoteButton = document.querySelector("#new-note-btn");
 const deleteNoteButton = document.querySelector("#delete-note-btn");
 
+const searchBar = document.querySelector("#searchbar");
+
 let notes = [];
 let selectedNoteId = null;
 
 loadNotes();
 renderNotes();
 
-// keyboard shortcuts
+//---------- keyboard shortcuts ------------
 
 // document.addEventListener("keydown", (e) => {
 //   if ((e.ctrlKey || e.metaKey) && e.key === "n") {
@@ -48,7 +50,6 @@ renderNotes();
 // });
 
 document.addEventListener("keydown", (e) => {
-  // create new note
   if ((e.ctrlKey || e.metaKey) && e.key === "n") {
     e.preventDefault();
     const note = createNote();
@@ -57,7 +58,6 @@ document.addEventListener("keydown", (e) => {
     renderNotes();
   }
 
-  // delete
   if (e.key === "Delete") {
     if (selectedNoteId !== null) {
       e.preventDefault();
@@ -69,7 +69,6 @@ document.addEventListener("keydown", (e) => {
     }
   }
 
-  // Escape - close editor
   if (e.key === "Escape") {
     selectedNoteId = null;
     editorPlaceholder.classList.remove("hidden");
@@ -78,7 +77,9 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-//Functions
+//
+//------------- Functions ---------------
+//
 
 function createNote() {
   const newNote = {
@@ -90,9 +91,9 @@ function createNote() {
   return newNote;
 }
 
-function renderNotes() {
+function renderNotes(notesToRender = notes) {
   notesList.innerHTML = "";
-  notes.forEach((note) => {
+  notesToRender.forEach((note) => {
     // const notePreview = note.content || "New Note";
     const splitLine = note.content.split("\n");
     const notePreview = splitLine[0] || "New Note";
@@ -139,7 +140,17 @@ function loadNotes() {
   }
 }
 
-// EventListeners
+function filterNotes(searchTerm) {
+  if (searchTerm === "") {
+    return notes;
+  }
+  return notes.filter((note) => {
+    return note.content.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+}
+// ---------------------------------
+// ------------------------------------
+//-------- EventListeners ----------
 
 newNoteButton.addEventListener("click", () => {
   const note = createNote();
@@ -172,5 +183,16 @@ deleteNoteButton.addEventListener("click", () => {
   if (confirmDelete) {
     deleteNote(selectedNoteId);
     saveNotes();
+  }
+});
+
+searchBar.addEventListener("input", () => {
+  const searchTerm = searchBar.value;
+  const filteredNotes = filterNotes(searchTerm);
+
+  if (filteredNotes.length === 0) {
+    notesList.innerHTML = "<p class='no-results'>No Notes Found</p>";
+  } else {
+    renderNotes(filteredNotes);
   }
 });
